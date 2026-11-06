@@ -1,34 +1,28 @@
-# Administrador de tareas - Frontend
+# Administrador de tareas Frontend
 
 Aplicación desarrollada con React, TypeScript, Vite y PNPM.
 
-## Alcance actual
+## Funciones actuales
 
-La aplicación administra una colección local de tareas mediante
-estado de React. Actualmente permite:
+- Operaciones CRUD de tareas.
+- Validación al registrar y editar.
+- Búsqueda por título.
+- Filtro por estado.
+- Ordenamiento de resultados.
+- Persistencia mediante localStorage.
+- Interfaz adaptable.
 
-- Registrar tareas.
-- Consultar la colección.
-- Completar y reabrir tareas.
-- Editar títulos.
-- Cancelar una edición.
-- Eliminar con confirmación.
-- Calcular el resumen automáticamente.
-- Mostrar una colección vacía.
+## Ejecución
 
-Los cambios permanecen en memoria y se reinician al recargar.
+pnpm install
+pnpm dev
 
-## Operaciones CRUD
+## Validación técnica
 
-- Create: registro mediante el formulario.
-- Read: renderizado de la colección.
-- Update: cambio de estado y edición.
-- Delete: eliminación confirmada.
-
-## Validación
-
-```bash
 pnpm lint
 pnpm build
-```
-s
+
+## Alcance
+
+Esta versión utiliza almacenamiento local del navegador.
+La conexión con la API REST se realizará en el EC3.

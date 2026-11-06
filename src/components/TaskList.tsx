@@ -3,6 +3,7 @@ import { TaskItem } from "./TaskItem";
 
 interface TaskListProps {
   tasks: Task[];
+  emptyMessage: string;
   onToggleStatus: (id: string) => void;
   onEditTask: (id: string, title: string) => void;
   onDeleteTask: (id: string) => void;
@@ -10,6 +11,7 @@ interface TaskListProps {
 
 export function TaskList({
   tasks,
+  emptyMessage,
   onToggleStatus,
   onEditTask,
   onDeleteTask,
@@ -28,8 +30,8 @@ export function TaskList({
 
       {tasks.length === 0 ? (
         <div className="empty-state" role="status">
-          <h3>No hay tareas registradas</h3>
-          <p>Utiliza el formulario para registrar una nueva actividad.</p>
+          <h3>Sin resultados</h3>
+          <p>{emptyMessage}</p>
         </div>
       ) : (
         <div className="task-list" role="list">

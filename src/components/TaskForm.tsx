@@ -1,22 +1,39 @@
-import React from "react";
 import { useState } from "react";
+import type { FormEvent } from "react";
+import {
+  TASK_TITLE_MAX_LENGTH,
+  validateTaskTitle,
+} from "../utils/task-validation";
+
 interface TaskFormProps {
   onAddTask: (title: string) => void;
 }
 
 export function TaskForm({ onAddTask }: TaskFormProps) {
   const [title, setTitle] = useState("");
-  const normalizedTitle = title.trim();
+  const [error, setError] = useState("");
 
-  function handleSubmit(event: React.SubmitEvent<HTMLFormElement>) {
+  function handleTitleChange(value: string): void {
+    setTitle(value);
+
+    if (error) {
+      setError(validateTaskTitle(value) ?? "");
+    }
+  }
+
+  function handleSubmit(event: FormEvent<HTMLFormElement>): void {
     event.preventDefault();
 
-    if (!normalizedTitle) {
+    const validationMessage = validateTaskTitle(title);
+
+    if (validationMessage) {
+      setError(validationMessage);
       return;
     }
 
-    onAddTask(normalizedTitle);
+    onAddTask(title.trim());
     setTitle("");
+    setError("");
   }
 
   return (
@@ -28,24 +45,35 @@ export function TaskForm({ onAddTask }: TaskFormProps) {
         </div>
       </div>
 
-      <form className="task-form" onSubmit={handleSubmit}>
+      <form className="task-form" onSubmit={handleSubmit} noValidate>
         <label htmlFor="task-title">Título de la tarea</label>
+
         <div className="task-form__row">
           <input
             id="task-title"
             name="title"
             type="text"
             placeholder="Ejemplo: revisar documentación"
-            maxLength={120}
+            maxLength={TASK_TITLE_MAX_LENGTH}
             value={title}
-            onChange={(event) => setTitle(event.target.value)}
-            required
+            onChange={(event) => handleTitleChange(event.target.value)}
+            aria-invalid={Boolean(error)}
+            aria-describedby={
+              error ? "task-title-help task-title-error" : "task-title-help"
+            }
           />
-          <button type="submit" disabled={!normalizedTitle}>
-            Agregar tarea
-          </button>
+          <button type="submit">Agregar tarea</button>
         </div>
-        <p className="helper-text">{title.length}/120 caracteres</p>
+
+        <p id="task-title-help" className="helper-text">
+          {title.length}/{TASK_TITLE_MAX_LENGTH} caracteres
+        </p>
+
+        {error && (
+          <p id="task-title-error" className="field-error" role="alert">
+            {error}
+          </p>
+        )}
       </form>
     </section>
   );
