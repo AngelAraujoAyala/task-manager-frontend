@@ -9,21 +9,23 @@ import {
 } from '../utils/task-validation';
 
 interface TaskItemProps {
-  task: Task;
-  onToggleStatus: (task: Task) => Promise<boolean>;
-  onEditTask: (
-    task: Task,
-    title: string,
-  ) => Promise<boolean>;
-  onDeleteTask: (task: Task) => Promise<boolean>;
+ task: Task;
+ canDelete: boolean;
+ onToggleStatus: (task: Task) => Promise<boolean>;
+ onEditTask: (
+ task: Task,
+ title: string,
+ ) => Promise<boolean>;
+ onDeleteTask: (task: Task) => Promise<boolean>;
 }
-
 export function TaskItem({
-  task,
-  onToggleStatus,
-  onEditTask,
-  onDeleteTask,
+ task,
+ canDelete,
+ onToggleStatus,
+ onEditTask,
+ onDeleteTask,
 }: TaskItemProps) {
+
   const [isEditing, setIsEditing] = useState(false);
   const [draftTitle, setDraftTitle] =
     useState(task.title);
@@ -166,22 +168,25 @@ export function TaskItem({
             ? 'Reabrir'
             : 'Completar'}
         </button>
-        <button
-          type="button"
-          disabled={isBusy || isEditing}
-          onClick={startEditing}
-        >
-          Editar
-        </button>
-        <button
-          type="button"
-          className="button-danger"
-          disabled={isBusy || isEditing}
-          onClick={() => void handleDelete()}
-        >
-          Eliminar
-        </button>
-      </div>
-    </article>
-  );
-}
+         <button
+           type="button"
+           disabled={isBusy || isEditing}
+           onClick={startEditing}
+         >
+           Editar
+         </button>
+         {canDelete && (
+           <button
+             type="button"
+             className="button-danger"
+             disabled={isBusy || isEditing}
+             onClick={() => void handleDelete()}
+           >
+             Eliminar
+           </button>
+         )}
+       </div>
+     </article>
+   );
+ }
+

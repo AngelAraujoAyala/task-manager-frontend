@@ -1,65 +1,46 @@
 # Administrador de tareas Frontend
 
-Aplicación desarrollada con React, TypeScript,
-Vite, React Router y PNPM.
+SPA desarrollada con React, TypeScript, Vite,
+React Router y Fetch API.
 
 ## Funciones actuales
-
-- Navegación SPA.
-- Página de inicio.
-- Administración de tareas.
-- Detalle mediante una ruta dinámica.
-- Página 404.
-- Operaciones CRUD.
-- Validación de títulos.
-- Búsqueda, filtros y ordenamiento.
-- Interfaz adaptable.
-
-## Integración con la API REST
-La aplicación consume la API de tareas mediante Fetch API.
-
-### Requisitos
-- Backend disponible en http://localhost:3000
-- Frontend ejecutado mediante Vite
-- MongoDB Atlas conectado desde el Backend
-
-### Configuración local
-1. Copiar `.env.example` como `.env.local`.
-2. Confirmar `VITE_API_URL=/api`.
-3. Iniciar el Backend con `pnpm dev`.
-4. Iniciar el Frontend con `pnpm dev`.
-
-### Funciones remotas
-- Listado paginado.
-- Búsqueda, filtro y ordenamiento.
-- Creación, edición y cambio de estado.
-- Eliminación con confirmación.
-- Consulta de detalle por identificador.
-- Estados de carga, vacío, error y reintento.
-
-### Compilación
-```bash
-pnpm build
-```
+- Registro e inicio de sesión.
+- Restauración de identidad con /api/auth/me.
+- Rutas públicas y protegidas.
+- CRUD remoto de tareas.
+- Búsqueda, filtros, ordenamiento y paginación.
+- Eliminación disponible para admin.
+- Manejo de carga, vacío, error, 401 y 403.
 
 ## Rutas
-
 - `/`
-- `/tasks`
-- `/tasks/:taskId`
-- `*`
+- `/login`
+- `/register`
+- `/tasks` protegida
+- `/tasks/:taskId` protegida
+- `/profile` protegida
+
+## Variables
+```env
+VITE_API_URL=/api
+```
 
 ## Ejecución
-
 ```bash
 pnpm install
 pnpm dev
 ```
+La API debe ejecutarse en el puerto configurado por
+el proxy de Vite.
 
-## Validación técnica
+## Seguridad didáctica
+El access token se conserva en sessionStorage para
+practicar restauración dentro de la pestaña. No se
+almacenan contraseñas ni se imprimen tokens. La API
+mantiene la autenticación y autorización reales.
 
+## Validación
 ```bash
 pnpm lint
 pnpm build
 ```
-
