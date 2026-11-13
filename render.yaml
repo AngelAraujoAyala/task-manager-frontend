@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: task-manager-frontend-a12
+    name: task-manager-frontend-a12-araujo-angel
     runtime: static
     buildCommand: >-
       corepack enable &&
